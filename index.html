@@ -65,7 +65,11 @@
 
     const translations = {
       heroTitle: { en:'Elevate Your Life', vi:'Nâng tầm cuộc sống', ko:'삶의 수준을 높이세요' },
-      heroDesc: { en:'Premium wellness products crafted for longevity, balance, and prestige.', vi:'Sản phẩm sức khỏe cao cấp cho tuổi thọ, cân bằng và đẳng cấp.', ko:'장수, 균형 및 명성을 위한 프리미엄 웰니스 제품.' },
+      heroDesc: { 
+        en:'Inner Health. True Beauty',  // slogan mới
+        vi:'Sức khỏe nội tại. Vẻ đẹp đích thực',
+        ko:'내면의 건강. 진정한 아름다움'
+      },
       productTitle: { en:'Our Collection', vi:'Bộ sưu tập của chúng tôi', ko:'컬렉션 소개' },
       adminBtn: { en:'Product Management', vi:'Quản lý sản phẩm', ko:'제품 관리' },
       loginBtnHeader: { en:'Login', vi:'Đăng nhập', ko:'로그인' },
@@ -154,7 +158,7 @@
   <section class="bg-black text-white" id="home">
     <div class="max-w-7xl mx-auto px-6 py-28 text-center">
       <h2 class="font-serif text-5xl mb-6" id="heroTitle">Elevate Your Life</h2>
-      <p class="text-gray-300 max-w-2xl mx-auto" id="heroDesc">Sản phẩm sức khỏe cao cấp cho tuổi thọ, cân bằng và đẳng cấp.</p>
+      <p class="text-gray-300 max-w-2xl mx-auto" id="heroDesc">Inner Health. True Beauty</p>
     </div>
   </section>
 
@@ -183,9 +187,7 @@
     // Toggle dropdown
     const dropdownBtn = document.querySelector('#adminDropdownContainer > button');
     const dropdownMenu = document.getElementById('adminDropdown');
-    dropdownBtn?.addEventListener('click', () => {
-      dropdownMenu.classList.toggle('hidden');
-    });
+    dropdownBtn?.addEventListener('click', () => { dropdownMenu.classList.toggle('hidden'); });
   </script>
 
 </body>
