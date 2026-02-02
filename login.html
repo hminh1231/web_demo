@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OlyLife – User Login</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter','sans-serif'] }, colors: { gold: '#C6A75E' } } }
+    };
+
+    let currentLang = localStorage.getItem('olyLang') || 'en';
+
+    const translations = {
+      loginBtnBox: { en: 'Login', vi: 'Đăng nhập', ko: '로그인' },
+      loginTitle: { en: 'User Login', vi: 'Đăng nhập người dùng', ko: '사용자 로그인' },
+      loginError: { en: 'Invalid ID or password', vi: 'ID hoặc mật khẩu không đúng', ko: 'ID 또는 비밀번호가 잘못되었습니다' }
+    };
+
+    function setLanguage(lang){
+      currentLang = lang;
+      localStorage.setItem('olyLang', lang);
+      applyLanguage();
+    }
+
+    function applyLanguage(){
+      document.getElementById('loginTitle').innerText = translations.loginTitle[currentLang];
+      document.getElementById('loginBtnBox').innerText = translations.loginBtnBox[currentLang];
+      document.getElementById('langSelect').value = currentLang;
+    }
+
+    function checkLogin(){
+      const id = document.getElementById('loginId').value;
+      const pass = document.getElementById('loginPass').value;
+      const errorEl = document.getElementById('loginError');
+
+      if(id==='admin' && pass==='admin'){
+        sessionStorage.setItem('olyAdmin', 'true'); // lưu trạng thái admin
+        window.location.href = 'index.html';
+      } else {
+        errorEl.innerText = translations.loginError[currentLang];
+      }
+    }
+
+    window.onload = applyLanguage;
+  </script>
+</head>
+
+<body class="bg-neutral-50 font-sans text-gray-800">
+
+  <header class="bg-white border-b">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-5">
+      <h1 class="font-serif text-3xl tracking-wide">OlyLife</h1>
+      <div class="flex items-center gap-4">
+        <span class="text-gold text-sm tracking-widest">LUXURY WELLNESS</span>
+        <select id="langSelect" onchange="setLanguage(this.value)" class="border rounded px-2 py-1">
+          <option value="en">English</option>
+          <option value="vi">Tiếng Việt</option>
+          <option value="ko">한국어</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex justify-center items-center min-h-[70vh]">
+    <div class="max-w-xl bg-white rounded-3xl shadow-lg p-10">
+      <h3 class="font-serif text-2xl mb-6 text-center" id="loginTitle">User Login</h3>
+      <input id="loginId" placeholder="ID" class="w-full border rounded px-4 py-2 mb-4" />
+      <input id="loginPass" type="password" placeholder="Password" class="w-full border rounded px-4 py-2 mb-4" />
+      <p id="loginError" class="text-red-500 mb-4 text-center"></p>
+      <button id="loginBtnBox" onclick="checkLogin()" class="w-full bg-black text-white py-3 rounded-full hover:opacity-90">Login</button>
+    </div>
+  </main>
+
+  <footer class="bg-black text-gray-400 text-center py-8">
+    © 2026 OlyLife. Crafted with prestige.
+  </footer>
+
+</body>
+</html>

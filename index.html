@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OlyLife – Luxury Wellness</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "XXXX",
+      appId: "XXXX"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.loadProducts = async () => {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const container = document.getElementById('productGrid');
+      container.innerHTML = '';
+      querySnapshot.forEach(doc => {
+        const p = doc.data();
+        container.innerHTML += `
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+            <img src="${p.image}" class="rounded-xl mb-4 h-48 w-full object-cover" />
+            <h4 class="font-serif text-xl mb-2">${p.name}</h4>
+            <p class="text-gray-600 text-sm">${p.desc}</p>
+          </div>
+        `;
+      });
+    };
+
+    window.addProduct = async () => {
+      const name = document.getElementById('pName').value;
+      const desc = document.getElementById('pDesc').value;
+      const image = document.getElementById('pImg').value;
+      if(!name || !desc || !image) return alert('Please fill all fields');
+      await addDoc(collection(db, "products"), { name, desc, image });
+      loadProducts();
+    };
+  </script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { serif:['Playfair Display','serif'], sans:['Inter','sans-serif'] },
+          colors: { gold:'#C6A75E' }
+        }
+      }
+    };
+
+    let currentLang = localStorage.getItem('olyLang') || 'en';
+    let isAdmin = sessionStorage.getItem('olyAdmin') === 'true';
+
+    const translations = {
+      heroTitle: { en:'Elevate Your Life', vi:'Nâng tầm cuộc sống', ko:'삶의 수준을 높이세요' },
+      heroDesc: { en:'Premium wellness products crafted for longevity, balance, and prestige.', vi:'Sản phẩm sức khỏe cao cấp cho tuổi thọ, cân bằng và đẳng cấp.', ko:'장수, 균형 및 명성을 위한 프리미엄 웰니스 제품.' },
+      productTitle: { en:'Our Collection', vi:'Bộ sưu tập của chúng tôi', ko:'컬렉션 소개' },
+      adminBtn: { en:'Product Management', vi:'Quản lý sản phẩm', ko:'제품 관리' },
+      loginBtnHeader: { en:'Login', vi:'Đăng nhập', ko:'로그인' },
+      signoutBtn: { en:'Sign Out', vi:'Đăng xuất', ko:'로그아웃' }
+    };
+
+    function setLanguage(lang){
+      currentLang = lang;
+      localStorage.setItem('olyLang', lang);
+      applyLanguage();
+    }
+
+    function applyLanguage(){
+      document.getElementById('heroTitle').innerText = translations.heroTitle[currentLang];
+      document.getElementById('heroDesc').innerText = translations.heroDesc[currentLang];
+      document.getElementById('productTitle').innerText = translations.productTitle[currentLang];
+      document.getElementById('loginBtnHeader').innerText = translations.loginBtnHeader[currentLang];
+      document.getElementById('adminSectionBtn').innerText = translations.adminBtn[currentLang];
+      document.getElementById('signoutBtn').innerText = translations.signoutBtn[currentLang];
+      document.getElementById('langSelect').value = currentLang;
+    }
+
+    function showAdminSection(){
+      document.getElementById('adminSection').style.display='block';
+      document.getElementById('productSection').style.display='none';
+    }
+
+    function showProducts(){
+      document.getElementById('adminSection').style.display='none';
+      document.getElementById('productSection').style.display='block';
+    }
+
+    function signOut(){
+      sessionStorage.removeItem('olyAdmin');
+      isAdmin = false;
+      document.getElementById('adminDropdownContainer').style.display='none';
+      document.getElementById('loginBtnHeader').style.display='inline-block';
+      showProducts();
+    }
+
+    function openLoginPage(){
+      window.location.href = 'login.html';
+    }
+
+    window.onload = () => {
+      applyLanguage();
+      if(isAdmin){
+        document.getElementById('loginBtnHeader').style.display='none';
+        document.getElementById('adminDropdownContainer').style.display='inline-block';
+      }
+      loadProducts();
+    }
+  </script>
+
+</head>
+
+<body class="bg-neutral-50 font-sans text-gray-800">
+
+  <header class="bg-white border-b">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-5">
+      <h1 class="font-serif text-3xl tracking-wide">OlyLife</h1>
+      <div class="flex items-center gap-4">
+        <span class="text-gold text-sm tracking-widest">LUXURY WELLNESS</span>
+        <select id="langSelect" onchange="setLanguage(this.value)" class="border rounded px-2 py-1">
+          <option value="en">English</option>
+          <option value="vi">Tiếng Việt</option>
+          <option value="ko">한국어</option>
+        </select>
+
+        <button id="loginBtnHeader" onclick="openLoginPage()" class="border px-3 py-1 rounded hover:bg-gray-100">Login</button>
+
+        <!-- Dropdown Admin -->
+        <div id="adminDropdownContainer" class="relative inline-block" style="display:none;">
+          <button class="border px-3 py-1 rounded hover:bg-gray-100">Admin ▼</button>
+          <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg overflow-hidden z-50 hidden" id="adminDropdown">
+            <button onclick="showAdminSection()" class="w-full text-left px-4 py-2 hover:bg-gray-100" id="adminSectionBtn">Product Management</button>
+            <button onclick="signOut()" class="w-full text-left px-4 py-2 hover:bg-gray-100" id="signoutBtn">Sign Out</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-black text-white" id="home">
+    <div class="max-w-7xl mx-auto px-6 py-28 text-center">
+      <h2 class="font-serif text-5xl mb-6" id="heroTitle">Elevate Your Life</h2>
+      <p class="text-gray-300 max-w-2xl mx-auto" id="heroDesc">Sản phẩm sức khỏe cao cấp cho tuổi thọ, cân bằng và đẳng cấp.</p>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="max-w-7xl mx-auto px-6 py-20" id="productSection">
+    <h3 class="font-serif text-4xl mb-12 text-center" id="productTitle">Our Collection</h3>
+    <div id="productGrid" class="grid md:grid-cols-3 gap-10"></div>
+  </section>
+
+  <!-- Admin Section -->
+  <section id="adminSection" class="bg-neutral-100 py-20" style="display:none;">
+    <div class="max-w-xl mx-auto bg-white rounded-3xl shadow-lg p-10">
+      <input id="pName" placeholder="Product name" class="w-full border rounded px-4 py-2 mb-4" />
+      <textarea id="pDesc" placeholder="Product description" class="w-full border rounded px-4 py-2 mb-4"></textarea>
+      <input id="pImg" placeholder="Image URL" class="w-full border rounded px-4 py-2 mb-6" />
+      <button onclick="addProduct()" class="w-full bg-black text-white py-3 rounded-full hover:opacity-90">Upload Product</button>
+      <button onclick="showProducts()" class="mt-4 w-full bg-gray-800 text-white py-3 rounded-full hover:opacity-90">Back to Products</button>
+    </div>
+  </section>
+
+  <footer class="bg-black text-gray-400 text-center py-8">
+    © 2026 OlyLife. Crafted with prestige.
+  </footer>
+
+  <script>
+    // Toggle dropdown
+    const dropdownBtn = document.querySelector('#adminDropdownContainer > button');
+    const dropdownMenu = document.getElementById('adminDropdown');
+    dropdownBtn?.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>
