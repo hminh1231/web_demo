@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us – Links Beauty & Health Center</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif']
+          },
+          colors: { gold: '#C6A75E' }
+        }
+      }
+    }
+  </script>
+
+  <script>
+    const translations = {
+      title: {
+        en: '🌿 About Us – Links Beauty & Health Center',
+        vi: '🌿 Về Chúng Tôi – Links Beauty & Health Center',
+        ko: '🌿 회사 소개 – Links Beauty & Health Center'
+      },
+      belief: {
+        en: 'At Links Beauty & Health Center, we believe that',
+        vi: 'Tại Links Beauty & Health Center, chúng tôi tin rằng',
+        ko: 'Links Beauty & Health Center는 다음을 믿습니다'
+      },
+      slogan: {
+        en: 'Inner Health. True Beauty.',
+        vi: 'Sức khỏe nội tại. Vẻ đẹp đích thực.',
+        ko: '내면의 건강. 진정한 아름다움.'
+      },
+      intro: {
+        en: 'We are where proactive wellness meets holistic beauty—offering safe, natural, and sustainable solutions for you and your family. Every service and product at Links is carefully selected based on effectiveness, quality, and long-term suitability.',
+        vi: 'Chúng tôi là nơi giao thoa giữa chăm sóc sức khỏe chủ động và vẻ đẹp toàn diện — mang đến các giải pháp an toàn, tự nhiên và bền vững cho bạn và gia đình. Mỗi dịch vụ và sản phẩm tại Links đều được lựa chọn kỹ lưỡng dựa trên hiệu quả, chất lượng và giá trị lâu dài.',
+        ko: 'Links는 예방적 웰니스와 전인적 아름다움이 만나는 곳으로, 가족을 위한 안전하고 자연적이며 지속 가능한 솔루션을 제공합니다.'
+      },
+      philosophy: {
+        en: 'With a dedicated team and a root-cause approach to care, we don’t just help you look better on the outside—we help you become healthier on the inside, so your beauty can last over time.',
+        vi: 'Với đội ngũ tận tâm và phương pháp tiếp cận từ gốc rễ, chúng tôi không chỉ giúp bạn đẹp bên ngoài mà còn khỏe mạnh từ bên trong để vẻ đẹp ấy bền vững theo thời gian.',
+        ko: '헌신적인 팀과 근본 원인 중심의 접근 방식을 통해 우리는 외적인 아름다움뿐 아니라 내적인 건강까지 함께 개선합니다.'
+      },
+      missionTitle: { en: 'Mission', vi: 'Sứ mệnh', ko: '미션' },
+      mission: {
+        en: 'To empower individuals and families to achieve lasting wellness and beauty through natural, safe, and effective solutions that nurture both inner health and outer radiance.',
+        vi: 'Trao quyền cho cá nhân và gia đình đạt được sức khỏe và vẻ đẹp bền vững thông qua các giải pháp tự nhiên, an toàn và hiệu quả.',
+        ko: '자연적이고 안전하며 효과적인 솔루션을 통해 지속적인 웰니스와 아름다움을 실현합니다.'
+      },
+      visionTitle: { en: 'Vision', vi: 'Tầm nhìn', ko: '비전' },
+      vision: {
+        en: 'To become a trusted leader in holistic beauty and wellness, recognized for transforming lives by combining health, beauty, and proactive self-care for every community we serve.',
+        vi: 'Trở thành thương hiệu dẫn đầu đáng tin cậy trong lĩnh vực làm đẹp và chăm sóc sức khỏe toàn diện. ',
+        ko: '건강, 아름다움, 자기 관리의 결합을 통해 삶을 변화시키는 신뢰받는 리더가 되는 것.'
+      },
+      valuesTitle: { en: 'Core Values', vi: 'Giá trị cốt lõi', ko: '핵심 가치' },
+      values: {
+        en: [
+          'Integrity: Upholding trust and transparency in every service and product.',
+          'Excellence: Commitment to the highest standards of quality and care.',
+          'Holistic Care: Focusing on the whole person, not just appearances.',
+          'Sustainability: Offering solutions that are safe, natural, and long-lasting.'
+        ],
+        vi: [
+          'Chính trực: Duy trì sự minh bạch và đáng tin cậy trong mọi dịch vụ và sản phẩm.',
+          'Xuất sắc: Cam kết tiêu chuẩn cao nhất về chất lượng và chăm sóc.',
+          'Chăm sóc toàn diện: Tập trung vào con người tổng thể, không chỉ vẻ bề ngoài.',
+          'Bền vững: Cung cấp giải pháp an toàn, tự nhiên và lâu dài.'
+        ],
+        ko: [
+          '정직성: 모든 서비스와 제품에서 신뢰와 투명성을 유지합니다.',
+          '탁월함: 최고 수준의 품질과 케어를 약속합니다.',
+          '전인적 케어: 외모뿐 아니라 전체적인 건강을 중시합니다.',
+          '지속 가능성: 안전하고 자연적이며 오래 지속되는 솔루션을 제공합니다.'
+        ]
+      }
+    };
+
+    let currentLang = localStorage.getItem('olyLang') || 'en';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('olyLang', lang);
+      applyLanguage();
+    }
+
+    function applyLanguage() {
+      // Dịch text
+      for (const key in translations) {
+        const el = document.getElementById(key);
+        if (el && typeof translations[key] === 'object' && !Array.isArray(translations[key])) {
+          el.innerText = translations[key][currentLang];
+        }
+      }
+
+      // Dịch danh sách values
+      const valuesList = document.getElementById('valuesList');
+      valuesList.innerHTML = '';
+      translations.values[currentLang].forEach(v => {
+        const li = document.createElement('li');
+        li.innerText = v;
+        valuesList.appendChild(li);
+      });
+
+      // Cập nhật select language nếu có
+      const langSelect = document.getElementById('langSelect');
+      if(langSelect) langSelect.value = currentLang;
+    }
+
+    // Tự động áp dụng ngôn ngữ khi load
+    document.addEventListener('DOMContentLoaded', applyLanguage);
+  </script>
+</head>
+
+<body class="bg-neutral-50 text-gray-800 font-sans">
+  <!-- HEADER CHUNG -->
+  <div id="site-header"></div>
+  <script src="components/header.js"></script>
+  <script> renderHeader(); </script>
+
+  <!-- MAIN -->
+  <main class="max-w-5xl mx-auto px-6 py-20">
+    <h1 id="title" class="font-serif text-4xl text-center mb-10"></h1>
+
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <p id="belief" class="mb-4"></p>
+      <p id="slogan" class="font-serif text-2xl text-gold mb-6"></p>
+      <p id="intro"></p>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg p-10 mb-16">
+      <p id="philosophy"></p>
+      <p class="mt-6 font-serif text-xl text-gold">
+        Links Beauty & Health Center – Inner Health. True Beauty.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="bg-white p-8 rounded-3xl shadow">
+        <h3 id="missionTitle" class="font-serif text-2xl mb-4"></h3>
+        <p id="mission"></p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl shadow">
+        <h3 id="visionTitle" class="font-serif text-2xl mb-4"></h3>
+        <p id="vision"></p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl shadow">
+        <h3 id="valuesTitle" class="font-serif text-2xl mb-4"></h3>
+        <ul id="valuesList" class="space-y-3"></ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-black text-gray-400 text-center py-8">
+    © 2026 Links Beauty & Health Center. Crafted with prestige.
+  </footer>
+</body>
+</html>
