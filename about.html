@@ -64,22 +64,22 @@
       valuesTitle: { en: 'Core Values', vi: 'Giá trị cốt lõi', ko: '핵심 가치' },
       values: {
         en: [
-          'Integrity: Upholding trust and transparency in every service and product.',
-          'Excellence: Commitment to the highest standards of quality and care.',
-          'Holistic Care: Focusing on the whole person, not just appearances.',
-          'Sustainability: Offering solutions that are safe, natural, and long-lasting.'
+          '<strong>Integrity</strong>: Upholding trust and transparency in every service and product.',
+          '<strong>Excellence</strong>: Commitment to the highest standards of quality and care.',
+          '<strong>Holistic Care</strong>: Focusing on the whole person, not just appearances.',
+          '<strong>Sustainability</strong>: Offering solutions that are safe, natural, and long-lasting.'
         ],
         vi: [
-          'Chính trực: Duy trì sự minh bạch và đáng tin cậy trong mọi dịch vụ và sản phẩm.',
-          'Xuất sắc: Cam kết tiêu chuẩn cao nhất về chất lượng và chăm sóc.',
-          'Chăm sóc toàn diện: Tập trung vào con người tổng thể, không chỉ vẻ bề ngoài.',
-          'Bền vững: Cung cấp giải pháp an toàn, tự nhiên và lâu dài.'
+          '<strong>Chính trực</strong>: Duy trì sự minh bạch và đáng tin cậy trong mọi dịch vụ và sản phẩm.',
+          '<strong>Xuất sắc</strong>: Cam kết tiêu chuẩn cao nhất về chất lượng và chăm sóc.',
+          '<strong>Chăm sóc toàn diện</strong>: Tập trung vào con người tổng thể, không chỉ vẻ bề ngoài.',
+          '<strong>Bền vững</strong>: Cung cấp giải pháp an toàn, tự nhiên và lâu dài.'
         ],
         ko: [
-          '정직성: 모든 서비스와 제품에서 신뢰와 투명성을 유지합니다.',
-          '탁월함: 최고 수준의 품질과 케어를 약속합니다.',
-          '전인적 케어: 외모뿐 아니라 전체적인 건강을 중시합니다.',
-          '지속 가능성: 안전하고 자연적이며 오래 지속되는 솔루션을 제공합니다.'
+          '<strong>정직성</strong>: 모든 서비스와 제품에서 신뢰와 투명성을 유지합니다.',
+          '<strong>탁월함</strong>: 최고 수준의 품질과 케어를 약속합니다.',
+          '<strong>전인적 케어</strong>: 외모뿐 아니라 전체적인 건강을 중시합니다.',
+          '<strong>지속 가능성</strong>: 안전하고 자연적이며 오래 지속되는 솔루션을 제공합니다.'
         ]
       }
     };
@@ -106,7 +106,7 @@
       valuesList.innerHTML = '';
       translations.values[currentLang].forEach(v => {
         const li = document.createElement('li');
-        li.innerText = v;
+        li.innerHTML = v; // <strong> sẽ hiển thị
         valuesList.appendChild(li);
       });
 
@@ -115,7 +115,6 @@
       if(langSelect) langSelect.value = currentLang;
     }
 
-    // Tự động áp dụng ngôn ngữ khi load
     document.addEventListener('DOMContentLoaded', applyLanguage);
   </script>
 </head>
